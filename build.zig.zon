@@ -1,8 +1,8 @@
 .{
-    .name = .semantic_clause_break,
+    .name = .senbreak,
     .version = "0.1.0",
     .minimum_zig_version = "0.16.0",
-    .fingerprint = 0xdc3f982655ce9c1c,
+    .fingerprint = 0x66d3e3b56fc5a290,
     .dependencies = .{
         .markz = .{
             .url = "git+https://codeberg.org/nurulhudaapon/markz#690daf1bd3c734bd1fb86bf334e1c491dd59de94",

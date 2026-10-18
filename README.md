@@ -1,16 +1,16 @@
-# Semantic Clause Break
+# senbreak
 
-A CLI application to reformat prose in markdown files such that each independent clause is given its own line in the markdown source.
+`senbreak`, short for "sentence break", is a CLI application to reformat prose in markdown files such that each sentence is given its own line in the markdown source.
 
 This is an implementation of [Semantic Line Breaks](https://sembr.org/).
 The intent is to make diffs easier to parse for humans.
 
-- Each independent clause is given its own line.
+- Each sentence is given its own line.
 - Applies to paragraphs, lists (numbered and bulleted), and block quotes.
-- Does _not_ apply to headings, tables, or source code.
-- If a clause would become a new block on its own line (e.g. it starts with `#` or `- `), the syntax responsible is backslash-escaped (`\#`, `\-`) so the clause still renders as text.
-  - The `--no-escape` CLI option changes this to leave multiple clause on a single line if splitting them would require backslash escapes.
-- A clause is left on its line if adding a newline would change how the document renders even with escaping, e.g. when the clause starts with an HTML tag or a code fence.
+- Does _not_ apply to text in headings, tables, or source code.
+- If the text would become a new block on its own line (e.g. it starts with `#` or `- `), the syntax responsible is backslash-escaped (`\#`, `\-`) so the sentence still renders as text.
+  - The `--no-escape` CLI option changes this to leave multiple sentences on a single line if splitting them would require backslash escapes.
+- Text is left on its line if adding a newline would change how the document renders even with escaping, e.g. when the clause starts with an HTML tag or a code fence.
 
 The files to process are provided as CLI arguments.
 
@@ -21,13 +21,13 @@ The files to process are provided as CLI arguments.
 
 ## Comparison to Other Tools
 
-| feature                   | semantic-clause-break | SemBr           |
-| ------------------------- | --------------------- | --------------- |
-| deterministic             | ✓                     |                 |
-| independent clauses       | ✓                     | ✓               |
-| dependent clauses         |                       | ✓               |
-| (non-semantic) list items |                       | ✓               |
-| filetypes                 | Markdown              | Markdown, LaTeX |
+| feature                   | senbreak | SemBr           |
+| ------------------------- | -------- | --------------- |
+| deterministic             | ✓        |                 |
+| independent clauses       | ✓        | ✓               |
+| dependent clauses         |          | ✓               |
+| (non-semantic) list items |          | ✓               |
+| filetypes                 | Markdown | Markdown, LaTeX |
 
 [SemBr](https://github.com/admk/sembr) uses transformers to analyze and split text.
 
@@ -53,11 +53,11 @@ This release fixes a crash on startup. It also improves error messages.
 ```
 ````
 
-`semantic-clause-break notes.md` reports 3 errors.
-The paragraph, the block quote, and the list item each have two clauses sharing one line.
+`senbreak notes.md` reports 3 errors.
+The paragraph, the block quote, and the list item each have two sentences sharing one line.
 The heading, the table, and the code block are left alone even though they also contain sentence-like text.
 
-Running `semantic-clause-break --fix notes.md` rewrites the file to:
+Running `senbreak --fix notes.md` rewrites the file to:
 
 ````markdown
 # Release notes. Read carefully.

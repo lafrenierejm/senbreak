@@ -46,28 +46,29 @@
           };
         in
         {
-          apps.check-zig-zon-lock = {
-            type = "app";
-            meta.description = "Check freshness of build.zig.zon2json-lock.";
-            program = pkgs.lib.getExe (
-              pkgs.writeShellApplication {
-                name = "check-zig-zon-lock";
-                runtimeInputs = [ env.zig2nix ];
-                text = builtins.readFile ./scripts/check-zig-zon-lock.sh;
-              }
-            );
-          };
-
-          apps.check-markdown-clause-break = {
-            type = "app";
-            meta.description = "Check that markdown files are split at independent clauses.";
-            program = pkgs.lib.getExe' self'.packages.default "semantic-clause-break";
+          apps = {
+            check-zig-zon-lock = {
+              type = "app";
+              meta.description = "Check freshness of build.zig.zon2json-lock.";
+              program = pkgs.lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "check-zig-zon-lock";
+                  runtimeInputs = [ env.zig2nix ];
+                  text = builtins.readFile ./scripts/check-zig-zon-lock.sh;
+                }
+              );
+            };
+            senbreak = {
+              type = "app";
+              meta.description = "Split markdown files semantically at sentence delimiters.";
+              program = pkgs.lib.getExe' self'.packages.default "senbreak";
+            };
           };
 
           packages = rec {
             foreign = env.package {
               # binary to be shipped outside of Nix
-              name = "semantic-clause-break";
+              name = "senbreak";
               src = env.pkgs.lib.cleanSource ./.;
 
               # Packages required for compiling
@@ -122,13 +123,13 @@
                 pass_filenames = false;
                 entry = self'.apps.check-zig-zon-lock.program;
               };
-              markdown-clause-break = {
+              senbreak = {
                 enable = true;
                 name = "markdown files split at independent clauses";
                 description = "Fails if any markdown file has un-split independent clauses (auto-fixed in place).";
                 files = "\\.md$";
                 pass_filenames = true;
-                entry = "${self'.apps.check-markdown-clause-break.program} --fix";
+                entry = "${self'.apps.senbreak.program} --fix";
               };
             };
           };

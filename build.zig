@@ -7,7 +7,7 @@ pub fn build(b: *std.Build) void {
     const markz_dep = b.dependency("markz", .{ .target = target, .optimize = optimize });
 
     const exe = b.addExecutable(.{
-        .name = "semantic-clause-break",
+        .name = "senbreak",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = target,

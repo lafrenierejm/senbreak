@@ -109,7 +109,7 @@ test "exitCode: --exit-zero ignores findings and changes" {
 
 const default_max_size_mib: usize = 16;
 
-const program_name = "semantic-clause-break";
+const program_name = "senbreak";
 const positional_usage = "<file>...";
 
 const FlagId = enum { fix, exit_zero, no_escape, max_size_mib, help };
