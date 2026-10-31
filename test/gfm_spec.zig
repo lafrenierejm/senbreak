@@ -34,7 +34,7 @@ pub const Example = struct {
 };
 
 /// spec.txt delimits each example with a fence of 32 backticks.
-const fence = "`" ** 32;
+const fence: [32]u8 = @splat('`');
 
 /// Yields each example in spec.txt in order. `markdown` points into `arena`
 /// because spec.txt writes tabs as "→" and they're replaced here.
@@ -68,7 +68,7 @@ pub const ExampleIterator = struct {
             } else return error.UnterminatedExample;
             // Skip the expected HTML; it isn't used.
             while (self.lines.next()) |body| {
-                if (std.mem.eql(u8, body, fence)) break;
+                if (std.mem.eql(u8, body, &fence)) break;
             } else return error.UnterminatedExample;
 
             return .{

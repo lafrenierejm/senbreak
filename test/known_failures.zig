@@ -25,7 +25,7 @@ const InputKey = struct { number: usize, mutation: Mutation };
 /// Orders by example number, then by mutation in declaration order.
 fn compareKey(key: InputKey, entry: KnownFailure) std.math.Order {
     return switch (std.math.order(key.number, entry.number)) {
-        .eq => std.math.order(@intFromEnum(key.mutation), @intFromEnum(entry.mutation)),
+        .eq => std.math.order(@backingInt(key.mutation), @backingInt(entry.mutation)),
         else => |order| order,
     };
 }

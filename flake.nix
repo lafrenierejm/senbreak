@@ -16,8 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zig2nix = {
-      # https://github.com/Cloudef/zig2nix/pull/60
-      url = "github:maxbol/zig2nix/fix/package-args-leak-into-derivation";
+      url = "github:Cloudef/zig2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -42,7 +41,7 @@
         }:
         let
           env = inputs.zig2nix.zig-env.${system} {
-            zig = pkgs.zig_0_16;
+            zig = pkgs.zig_0_17;
           };
         in
         {
